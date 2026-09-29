@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
-@Service
 @RequiredArgsConstructor
 public class ProductService {
 

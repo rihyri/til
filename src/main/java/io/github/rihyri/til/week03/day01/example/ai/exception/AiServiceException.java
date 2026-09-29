@@ -1,0 +1,8 @@
+package io.github.rihyri.til.week03.day01.example.ai.exception;
+
+public class AiServiceException extends RuntimeException {
+
+    public AiServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}

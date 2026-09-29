@@ -7,6 +7,10 @@ plugins {
 group = 'io.github.rihyri'
 version = '0.0.1-SNAPSHOT'
 
+ext {
+	set('springAiVersion', '1.0.9')
+}
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
@@ -24,6 +28,7 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	implementation 'org.springframework.security:spring-security-crypto'
 	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+	implementation 'org.springframework.ai:spring-ai-starter-model-openai'
 
 	compileOnly 'org.projectlombok:lombok'
 
@@ -52,4 +57,10 @@ tasks.withType(JavaCompile).configureEach {
 	options.generatedSourceOutputDirectory.set(
 			querydslDir.get().asFile
 	)
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+	}
 }
