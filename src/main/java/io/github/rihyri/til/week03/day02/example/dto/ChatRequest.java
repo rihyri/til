@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
  * 사용자가 AI에게 질문할 때 사용하는 요청 DTO
  */
 @Getter
-@Setter
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ChatRequest {
