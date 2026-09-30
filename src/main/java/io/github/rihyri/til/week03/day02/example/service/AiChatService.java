@@ -1,6 +1,7 @@
 package io.github.rihyri.til.week03.day02.example.service;
 
 import io.github.rihyri.til.week03.day02.example.dto.ChatResponseDto;
+import io.github.rihyri.til.week03.day02.example.dto.ReviewResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -16,6 +17,8 @@ import reactor.core.publisher.Flux;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Service
@@ -75,7 +78,7 @@ public class AiChatService {
 
 
     // =========== 2. 대화 히스토리를 포함한 AI 질문 ===========
-    public ChatResponseDto chatWithHistory (String question, String conversationId) {
+    public ChatResponseDto chatWithHistory(String question, String conversationId) {
 
         /*
          * STEP 1. 대화 ID 확인
@@ -250,5 +253,71 @@ public class AiChatService {
         conversations.clear();
 
         log.info("모든 대화 세션 초기화 완료");
+    }
+
+
+    // 실습 문제
+    public ReviewResponseDto analyzeReview(String productName, String review) {
+
+        String answer = chatClient.prompt()
+                .system("""
+                        당신은 이커머스 플랫폼의 상품 리뷰 평가 전문가입니다.
+                        
+                        배송, 품질, 가격, 서비스 등에 대한
+                        리뷰 내용을 종합하여 상품 만족도를 판단하세요.
+                        
+                        satisfaction은 반드시 다음 중 하나로 판단하세요.
+                        - high
+                        - medium
+                        - low
+                        
+                        confidence는 해당 판단에 대한 확신도를
+                        0.00부터 1.00 사이의 소수점 둘째 자리 숫자로 표현하세요.
+                        
+                        반드시 다음 형식으로만 응답하세요.
+                        
+                        satisfaction: low
+                        confidence: 0.88
+                        
+                        """)
+                .user("""
+                            상품명: %s
+                            리뷰: %s
+                        """.formatted(productName, review))
+                .call()
+                .content();
+
+        // AI 응답에서 만족도 값을 추출
+        String satisfaction = null;
+
+        String[] satisfactionLevels = {"high", "medium", "low"};
+
+        for (String level : satisfactionLevels) {
+            if (answer.contains(level)) {
+                satisfaction = level;
+                break;
+            }
+        }
+
+        // confidence 값 추출
+        double confidence = 0.0;
+
+        Pattern pattern = Pattern.compile("(0\\.\\d{2}|1\\.00)");
+        Matcher matcher = pattern.matcher(answer);
+
+        if (matcher.find()) {
+            confidence = Double.parseDouble(matcher.group());
+        }
+
+        if (satisfaction == null) {
+            log.error("AI 만족도 분석 결과 형식 오류: {}", answer);
+            throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "AI 분석 결과를 처리할 수 없습니다.");
+        }
+
+        return ReviewResponseDto.builder()
+                .satisfaction(satisfaction)
+                .confidence(confidence)
+                .detectedAt(LocalDateTime.now())
+                .build();
     }
 }

@@ -2,7 +2,10 @@ package io.github.rihyri.til.week03.day02.example.controller;
 
 import io.github.rihyri.til.week03.day02.example.dto.ChatRequest;
 import io.github.rihyri.til.week03.day02.example.dto.ChatResponseDto;
+import io.github.rihyri.til.week03.day02.example.dto.ReviewRequest;
+import io.github.rihyri.til.week03.day02.example.dto.ReviewResponseDto;
 import io.github.rihyri.til.week03.day02.example.service.AiChatService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -56,5 +59,12 @@ public class AiChatController {
     public ResponseEntity<Void> clearAll() {
         aiChatService.clearAll();
         return ResponseEntity.noContent().build();
+    }
+
+
+    // 실습 Controller
+    @PostMapping("/chat/sentiment")
+    public ReviewResponseDto analyzeReview (@Valid @RequestBody ReviewRequest request) {
+        return aiChatService.analyzeReview(request.getProductName(), request.getReview());
     }
 }
