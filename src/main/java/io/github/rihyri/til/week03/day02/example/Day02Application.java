@@ -1,4 +1,4 @@
-package io.github.rihyri.til.week03.day02;
+package io.github.rihyri.til.week03.day02.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
