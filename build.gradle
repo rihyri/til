@@ -22,32 +22,50 @@ repositories {
 }
 
 dependencies {
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-	implementation 'org.springframework.security:spring-security-crypto'
-	implementation 'org.springframework.ai:spring-ai-starter-model-google-genai-embedding'
-
 	implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
 
+	implementation 'org.springframework.security:spring-security-crypto'
+
+	// ========================================
+	// Spring AI
+	implementation 'org.springframework.ai:spring-ai-starter-model-google-genai-embedding'
 	implementation 'org.springframework.ai:spring-ai-starter-model-openai'
 
+	// ===== 기존 PostgreSQL pgvector =====
 	implementation 'org.springframework.ai:spring-ai-starter-vector-store-pgvector'
 
 	compileOnly 'org.projectlombok:lombok'
-
 	annotationProcessor 'org.projectlombok:lombok'
+
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	annotationProcessor 'com.querydsl:querydsl-apt:5.1.0:jakarta'
 	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
 	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
 
-	runtimeOnly 'org.postgresql:postgresql'
+	// ===== 기존 PostgreSQL 드라이버 =====
+	// runtimeOnly 'org.postgresql:postgresql'
 
+	// ===== 기존 MariaDB 드라이버 =====
+	// runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+	// ===== MySQL =====
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// Flyway (DB 마이그레이션)
+	// Flyway 공통
 	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.flywaydb:flyway-database-postgresql'
+
+	// ===== 기존 PostgreSQL Flyway =====
+	// implementation 'org.flywaydb:flyway-database-postgresql'
+
+	// ===== MySQL / MariaDB Flyway =====
+	implementation 'org.flywaydb:flyway-mysql'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
