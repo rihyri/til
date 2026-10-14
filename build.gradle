@@ -57,6 +57,11 @@ dependencies {
 	// ===== MySQL =====
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
+	// Redis
+	// HttpSession 데이터를 Redis에 저장
+	implementation 'org.springframework.session:spring-session-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	
 	// Flyway (DB 마이그레이션)
 	// Flyway 공통
 	implementation 'org.flywaydb:flyway-core'
