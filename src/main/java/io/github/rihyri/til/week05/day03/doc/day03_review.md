@@ -1,6 +1,6 @@
 <br>
 
-# Week 05 - Day 02 : 학습 회고
+# Week 05 - Day 03 : 학습 회고
 
 <br>
 
