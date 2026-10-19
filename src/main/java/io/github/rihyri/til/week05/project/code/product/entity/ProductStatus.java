@@ -1,4 +1,4 @@
-package io.github.rihyri.til.week05.project.product.entity;
+package io.github.rihyri.til.week05.project.code.product.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

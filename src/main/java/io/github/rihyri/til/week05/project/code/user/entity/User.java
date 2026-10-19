@@ -1,4 +1,4 @@
-package io.github.rihyri.til.week05.project.user.entity;
+package io.github.rihyri.til.week05.project.code.user.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

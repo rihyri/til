@@ -1,7 +1,7 @@
-package io.github.rihyri.til.week05.project.cart.entity;
+package io.github.rihyri.til.week05.project.code.cart.entity;
 
-import io.github.rihyri.til.week05.day03.example.dto.Product;
-import io.github.rihyri.til.week05.project.user.entity.User;
+import io.github.rihyri.til.week05.project.code.product.entity.Product;
+import io.github.rihyri.til.week05.project.code.user.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,13 +27,13 @@ import lombok.experimental.FieldDefaults;
  *  따라서 두 컬럼을 하나의 조합으로 UNIQUE 처리해야 한다.
  */
 @Table(
-    name = "carts",
-    uniqueConstraints = {
-        @UniqueConstraint(
-            name = "uk_cart_product",
-            columnNames = {"user_id", "product_id"}
-        )
-    }
+        name = "carts",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_cart_product",
+                        columnNames = {"user_id", "product_id"}
+                )
+        }
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -58,7 +58,7 @@ public class CartItem {
     User user;
 
 
-     // 상품 하나는 여러 사용자의 장바구니에 담길 수 있다.
+    // 상품 하나는 여러 사용자의 장바구니에 담길 수 있다.
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     Product product;
